@@ -1,0 +1,147 @@
+header {
+  width: 100%;
+  height: 70px;
+  background-color: var(--bg-color-v2);
+  z-index: 10;
+}
+
+.header_inner {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_searchbox {
+  display: flex;
+}
+
+#searchbox {
+  width: 400px;
+  height: 40px;
+  border-radius: 0 10px 10px 0;
+  border: none;
+  outline: none;
+  padding: 10px;
+}
+
+#category {
+  height: 40px;
+  border-radius: 10px 0 0 10px;
+  border: none;
+  outline: none;
+  text-align-last: center;
+}
+
+.header_nav {
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.dropdown {
+  float: right;
+  overflow: hidden;
+}
+
+.dropdown .dropdown_btn {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  margin: 0;
+  font-size: 1.3rem;
+  margin-right: 10px;
+}
+
+.dropdown .dropdown_btn:hover {
+  border: 1px solid white;
+}
+
+.dropdown_content {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-color-v2);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown_content a {
+  float: none;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+
+}
+
+.dropdown_content a:hover {
+  text-decoration: underline;
+}
+
+.dropdown:hover .dropdown_content{
+  display: block;
+}
+nav {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav a{
+  float: right;
+  text-align: center;
+  text-decoration: none;
+  margin-right: 15px;
+  font-size: 1.5rem;
+}
+
+
+
+li {
+  float: left;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.logo {
+  margin-left: 15px;
+}
+
+.cart_btn {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  font-size: 1.3rem;
+  margin: 0px 10px 0 0;
+  cursor: pointer;
+}
+
+.cart {
+  float: right;
+}
+
+.cart_count {
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+
+.cart_count .text-small {
+  color: #171717;
+  font-weight: 700;
+  font-size: 16px;
+
+}
+
+
