@@ -1,0 +1,21 @@
+<div class="login-container">
+  <form action="" method="POST" role="form" #loginForm="ngForm" (ngSubmit)="login(loginForm)" style="width: 100%">
+    <div class="form-group">
+      <div class="input-group">
+        <span class="icon">
+          <i class="fa-solid fa-user fa-xl"></i>
+        </span>
+        <input type="email" class="form-control-text" id="username" placeholder="Username" ngModel name="username">
+      </div>
+
+      <div class="input-group">
+        <span class="icon">
+          <i class="fa-solid fa-lock fa-xl"></i>
+        </span>
+        <input type="password" class="form-control-text" id="password" placeholder="Password" ngModel name="password">
+      </div>
+    </div>
+
+    <button class="btn btn-medium btn-no-border btn-success">Submit</button>
+  </form>
+</div>

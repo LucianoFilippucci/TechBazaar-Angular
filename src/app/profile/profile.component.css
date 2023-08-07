@@ -1,0 +1,89 @@
+.heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.heading > .btn {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.profile {
+    display: flex;
+    gap: 110px;
+}
+
+.user-thumbnail {
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    display: block;
+    object-fit: fill;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.username, .email {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.side-nav > ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+}
+
+.side-link {
+    text-decoration: none;
+    display: block;
+}
+
+.side-link:hover {
+    transform: scale(1.05);
+}
+
+.side-link:active {
+    background-color: var(--bg-color-v2);
+}
+
+.content {
+    margin-top: 15px;
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 250px;
+    height: 125px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: var(--text-color-accent);
+}
+
+.card-header > p {
+    margin-left: 10px;
+    margin-top: 5px;
+    color: var(--text-color-dark);
+    display: inline;
+}
+
+.card-header > i {
+    float: right;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.card-header > i:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.card-body > p {
+    margin-left: 10px;
+}

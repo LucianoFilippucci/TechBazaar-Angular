@@ -1,0 +1,71 @@
+<div id="cartModal" class="modal" (click)="closeModal($event)">
+  <div class="modal_content" id="modalContent">
+
+
+    <div class="modal_header">
+      <span class="close" id="modalClose" (click) = "closeModal($event)">&times;</span>
+      <h2>USER Cart</h2>
+    </div>
+
+
+    <div class="modal_body">
+
+      <div *ngFor="let element of cartElements" class="cart-element">
+        <div class="cart-product-img"></div>
+        <div class="cart-product-details">
+          <span class="cart-product-name div1">{{element["name"]}}</span>
+          <span class="cart-product-price div2">{{element["price"]}}</span>
+          <span class="cart-product-qty div4">
+                                <label for="quantity">Quantity:</label>
+                                <input type="number" name="quantity" id="quantity" min="1" max="25" value="{{element['qty']}}">
+                            </span>
+          <span class="div3"><i class="fa-solid fa-trash" style="cursor:pointer;" (click)="removeElement(element.productId)"></i></span>
+        </div>
+      </div>
+
+
+      <div class="cart-footer">
+        <div class="line"></div>
+        <!--  -->
+        <div class="cart-resume">
+          <p class="cart-text">
+            Coupon:
+          </p>
+
+          <p>NO COUPON</p>
+
+          <div class="line"></div>
+          <div class="coupon">
+            <input type="text" name="searchBox" id="searchBox" placeholder="ENTER COUPON CODE HERE">
+            <div class="btn btn-success">Apply</div>
+          </div>
+
+          <div class="test">
+            <label for="subtotal">Subtotal</label>
+            <p class="text-right" id="subtotal">${{cartTotal}}</p>
+          </div>
+          <div class="test">
+            <label for="tax">Tax (22%)</label>
+            <p class="text-right" id="tax">${{tax}}</p>
+          </div>
+          <div class="test">
+            <label for="shippingCost">Shipping</label>
+            <p class="text-right" id="shippingCost">$0</p>
+          </div>
+          <div class="test">
+            <label for="total">Total</label>
+            <p class="text-right" id="total">{{cartTotal}}</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="modal_footer">
+      <button class="btn btn-no-border" (click)="clearCart()">Clear Cart</button>
+      <button class="btn btn-success btn-medium" (click)="checkOut()">Checkout</button>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@
   --color-mint: #3BBA9C;
   --text-color: #bdc3c7;
   --text-color-accent: #FFFFCC;
+  --text-color-dark: #2E3047;
   --success-green: #D4EDDA;
   --error-red: #F8D7DA;
 }
@@ -49,7 +50,7 @@ body {
 }
 
 .btn-small {
-  padding: 2px 2px;
+  padding: 2px 5px;
 }
 
 .btn-small-but-medium {
@@ -71,6 +72,11 @@ body {
 .btn-success {
   background-color: var(--ligher);
   border: none;
+}
+
+.btn-accent {
+  background-color: var(--success-green);
+  color: var(--background-color)
 }
 
 /* TOAST */
@@ -130,4 +136,28 @@ body {
 
 .line-smaller {
   width: 80%;
+}
+
+.text-medium {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.text-light {
+  padding: 5px;
+  color: var(--ligher);
+}
+
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@Keyframes spin {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
 }

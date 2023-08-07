@@ -1,0 +1,51 @@
+<div class="product-section">
+  <div class="prod-img">
+    <div class="product-img"></div>
+    <div class="product-imgs"></div>
+  </div>
+
+  <div class="product-short-details">
+    <div *ngIf="product != undefined">
+      <span class="product-name">{{product.name}}</span>
+      <span class="store-name "> <b>Store: </b> <a href="">{{product.store["storeName"]}}</a></span>
+      <div class="line"></div>
+      <span class="product-text text-new">${{product.price}}</span>
+      <div class="ratings">
+        <i class="fa-solid fa-star fa-xs"></i>
+        <i class="fa-solid fa-star fa-xs"></i>
+        <i class="fa-solid fa-star fa-xs"></i>
+        <i class="fa-solid fa-star fa-xs"></i>
+        <i class="fa-regular fa-star fa-xs"></i>
+        <div class="text-small">8 reviews</div>
+      </div>
+      <p><b>Condition: </b>New</p>
+      <p class="description short">{{product.description}}</p>
+    </div>
+    <div class="product-options">
+      <div class="color-options">
+        <p><b>Color Options</b></p>
+        <div class="option-list">
+
+        </div>
+      </div>
+
+      <div class="size-options">
+        <p><b>size Options</b></p>
+        <div class="option-list">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-success btn-medium" (click)="addToCart()">ADD CART</button>
+      <button class="btn btn-small btn-no-border btn-nobg"><i class="fa-solid fa-bookmark"></i></button>
+      <button class="btn btn-small btn-no-border btn-nobg"><i class="fa-solid fa-share-nodes"></i></button>
+    </div>
+
+  </div>
+</div>
+
+<div class="review-section">
+
+</div>

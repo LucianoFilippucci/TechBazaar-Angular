@@ -1,4 +1,4 @@
-<header *ngIf="showElementsService.showNavBar">
+<header *ngIf="showNav">
   <div class="header_inner">
     <div class="logo">LOGO</div>
     <div class="header_searchbox">
@@ -30,7 +30,7 @@
               </div>
             </div>
           </li>
-          <li><a routerLink="user/{{userId}}/orders">Resi e Ordini</a></li>
+          <li><a routerLink="user/orders">Resi e Ordini</a></li>
           <div class="cart">
             <button class="cart_btn" id="cartBtn" (click) = "openCartModal()"><i class="fa-solid fa-cart-shopping fa-xl"></i></button>
             <span class="cart_count"><span class="text-small">{{cartItemNum}}</span></span>
@@ -44,7 +44,7 @@
 
 <div id="toast"></div>
 
-<div class="container">
+<div id="container" class="container">
   <router-outlet></router-outlet>
 </div>
 
