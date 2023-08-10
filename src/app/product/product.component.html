@@ -46,6 +46,41 @@
   </div>
 </div>
 
-<div class="review-section">
+<div id="modal_" class="modalGeneric" (click)="close($event)">
+  <div class="modal_content" id="modal_Content">
 
+
+    <div class="modal_header">
+      <span class="close" id="modal_Close" (click) = "close($event)">&times;</span>
+      <h2 id="modalTitle"></h2>
+    </div>
+
+
+    <div id="modalBody" class="modal_body">
+      <form action='' method='POST' role='form' #reviewForm='ngForm' (ngSubmit)='submitForm(reviewForm)' style='width: 100%'>
+        <div class='form-group'>
+          <div class='input-group'><input type='text' class='form-control-text' id='titleInput' placeholder='Review Title' ngModel name='title' style='width: 100%;'></div>
+          <div class='input-group'><textarea name="body" placeholder="Review Body" id="bodyInput" ngModel cols="60" rows="15" class="review-text-area"></textarea></div>
+          <input type='text' class='form-control-text' id='' placeholder='Review Body' ngModel name='body' style='height: 150px; width: 100%'>
+        </div>
+
+        <div id='starCount'>
+          <i class="fa-regular fa-star fa-xs" (click)='setStarCount(1)'></i>
+          <i class="fa-regular fa-star fa-xs" (click)='setStarCount(2)'></i>
+          <i class="fa-regular fa-star fa-xs" (click)='setStarCount(3)'></i>
+          <i class="fa-regular fa-star fa-xs" (click)='setStarCount(4)'></i>
+          <i class="fa-regular fa-star fa-xs" (click)='setStarCount(5)'></i>
+        </div>
+        <button class='btn btn-medium btn-no-border btn-success'>Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="review-section">
+  <div style="margin-bottom: 15px">
+    <button class="btn btn-success btn-small" (click) = "newReview()" style="flex-grow: 0">{{userHasReview ? 'Edit Review' : 'New Review'}}</button>
+
+  </div>
+  <app-review *ngFor="let review of productReviews" [review] = "review"></app-review>
 </div>

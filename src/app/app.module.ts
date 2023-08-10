@@ -11,8 +11,8 @@ import {CommonModule, NgOptimizedImage} from "@angular/common";
 import { LoginComponent } from './login/login.component';
 import {FormsModule} from "@angular/forms";
 import { ProfileComponent } from './profile/profile.component';
-import { ModalComponent } from './modal/modal.component';
 import {authenticationGuard} from "./auth/auth.guard";
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import {authenticationGuard} from "./auth/auth.guard";
     OrdersComponent,
     LoginComponent,
     ProfileComponent,
-    ModalComponent
+    ReviewComponent
   ],
     imports: [
         BrowserModule,

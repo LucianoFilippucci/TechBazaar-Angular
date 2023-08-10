@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import {RestManagerService} from "./rest-manager.service";
 import {HttpClient} from "@angular/common/http";
 import {
-  ADD_ELEM_TO_CART, CHECKOUT, CLEAR_CART,
+  ADD_ELEM_TO_CART, CHECKOUT, CLEAR_CART, EDIT_REVIEW, FETCH_USER_REVIEW, GET_ALL_PRODUCT_PAGED_REVIEWS,
   GET_CART,
   GET_SINGLE_PRODUCT,
-  GET_USER_ORDER_LIST,
-  LOGIN, REMOVE_CART_ELEMENT,
+  GET_USER_ORDER_LIST, LIKE_REVIEW,
+  LOGIN, NEW_REVIEW, REMOVE_CART_ELEMENT,
   SERVER_ADDRESS
 } from "./Helpers/variables";
 
@@ -96,7 +96,7 @@ export class ServerRequestFacadeService {
     )
   }
 
-  removeCartElement(cartId: string, productId: string, callback: any, token: string) {
+  removeCartElement(cartId: string, productId: number, callback: any, token: string) {
     this.restManager.makeAuthorizedPostJsonRequest(
       SERVER_ADDRESS,
       REMOVE_CART_ELEMENT,
@@ -105,6 +105,75 @@ export class ServerRequestFacadeService {
         productId: productId,
         qty: 0
       },
+      callback,
+      false,
+      token
+    )
+  }
+
+  getReviews(productId: number, page: number, pageSize: number, sortBy: string, callback: any) {
+    this.restManager.makeGetRequest(
+      SERVER_ADDRESS,
+      GET_ALL_PRODUCT_PAGED_REVIEWS,
+      {
+        productId: productId,
+        page: page,
+        pageSize: pageSize,
+        sortBy: sortBy
+      },
+      callback
+    )
+  }
+
+  likeReview(reviewId: number, userId: number, callback: any, token: string) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      LIKE_REVIEW,
+      {
+        reviewId: reviewId,
+        userId: userId
+      },
+      callback,
+      false,
+      token
+    )
+  }
+
+  fetchUserReview(reviewId: number, callback: any, token: string) {
+    this.restManager.makeAuthorizedGetRequest(
+      SERVER_ADDRESS,
+      FETCH_USER_REVIEW,
+      {
+        reviewId: reviewId
+      },
+      token,
+      false,
+      callback
+    )
+  }
+
+  submitReview(userId: number, reviewTitle: string, reviewBody: string, callback: any, token: string, reviewId: number, productId: number, starCount: number) {
+    let body: any;
+    if(reviewId == -1) {
+      body = {
+        productId: productId,
+        userId: userId,
+        starCount: starCount,
+        title: reviewTitle,
+        body: reviewBody
+      }
+    } else {
+      body = {
+        reviewId: reviewId,
+        title: reviewTitle,
+        body: reviewBody,
+        stars: starCount
+      }
+    }
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      reviewId == -1 ? NEW_REVIEW : EDIT_REVIEW,
+      body,
       callback,
       false,
       token

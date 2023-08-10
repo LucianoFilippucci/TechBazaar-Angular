@@ -7,6 +7,8 @@ import {UpdateCartService} from "../update-cart.service";
 import {LoginStateModel} from "../models/login-state.model";
 import {LOGIN} from "../Helpers/variables";
 import {AccountingService} from "../accounting.service";
+import {ProductReviewModel} from "../models/product-review.model";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-product',
@@ -17,6 +19,12 @@ export class ProductComponent implements OnInit {
 
   productId: number;
   product: Product | undefined;
+  productReviews: ProductReviewModel[] | undefined;
+  userHasReview: boolean = false;
+  // @ts-ignore
+  user: LoginStateModel;
+  userReview: number = -1;
+  starCount: number = 0;
   constructor(
     private activatedRouter: ActivatedRoute,
     private serverRequestFacade: ServerRequestFacadeService,
@@ -25,11 +33,76 @@ export class ProductComponent implements OnInit {
     private accountingService: AccountingService) {
     this.productId = activatedRouter.snapshot.params["id"];
     this.serverRequestFacade.getProduct(this.productId, this.showProduct.bind(this));
+    if(this.accountingService.isAuthenticated()){
+      let u = this.accountingService.getUser();
+      if(u != false)
+        this.user = u;
+    }
   }
 
   ngOnInit() {
+    this.serverRequestFacade.getReviews(this.productId, 0, 10, "", (status: boolean, response: any) => {
+      if(status) {
+        this.productReviews = response as ProductReviewModel[];
+        if(this.accountingService.isAuthenticated()) {
+          for (let i = 0; i < this.productReviews.length; i++) {
+            let rev = this.productReviews[i];
+            if (rev.user["userId"] == this.user.id) {
+              this.userHasReview = true;
+              this.userReview = this.productReviews[i].reviewId;
+            }
+          }
+        }
+      } else {
+        this.toastService.show({message: "Error fetching Product Reviews", isError: true});
+      }
+    });
 
   }
+
+  newReview() {
+    if(this.accountingService.isAuthenticated()) {
+      let modal = document.getElementById("modal_");
+      if(modal != null)
+        modal.style.display = "block";
+      let modalTitle = document.getElementById("modalTitle");
+      let modalBody = document.getElementById("modalBody");
+      if(modalTitle != null && modalBody != null) {
+        modalTitle.innerText = "Edit Review";
+        if(this.userHasReview) {
+          this.serverRequestFacade.fetchUserReview(this.userReview, (status: boolean, result: any) => {
+            if(status) {
+              let bodyInput = document.getElementById("bodyInput") as HTMLTextAreaElement;
+              let titleInput = document.getElementById("titleInput") as HTMLInputElement;
+              if (bodyInput != null && titleInput != null) {
+                bodyInput.value = result["body"];
+                titleInput.value = result["title"];
+              }
+            } else {
+              this.toastService.show({ message: "Error fetching review data.", isError: true});
+            }
+          }, this.user.token);
+        }
+      }
+    }
+  }
+
+  submitForm(form:NgForm) {
+    if(this.accountingService.isAuthenticated()) {
+      this.serverRequestFacade.submitReview(this.user.id, form.value["title"], form.value["body"], (status: boolean, result: any) => {
+        if (status) {
+          this.toastService.show({message: this.userHasReview ? "Review Updated!" : "Review Done!", isError: false});
+          //this.location.reload();
+        } else {
+          this.toastService.show({message: "Error.", isError: true});
+          //this.location.reload();
+        }
+      }, this.user.token, this.userReview, this.productId, this.starCount);
+
+    }
+  }
+
+
 
   public showProduct(status: boolean, result: any) {
     this.product = result["message"] as Product;
@@ -54,4 +127,31 @@ export class ProductComponent implements OnInit {
   else
     this.toastService.show({message: "Error. Element not Added.", isError: true});
   }
+
+  // @ts-ignore
+  close(event) {
+    let cartModal = document.getElementById("modal_")
+    let cart = document.getElementById("modal_Content");
+    let cartCloseButton = document.getElementById("modal_Close");
+
+    if(cartModal != null && cart != null && cartCloseButton != null) {
+      if(!cart.contains(event.target) || event.target == cartCloseButton) {
+        cartModal.style.display = "none";
+      }
+    }
+
+  }
+
+  setStarCount(value: number) {
+    this.starCount = value;
+    let starCountDiv = document.getElementById("starCount");
+    if(starCountDiv != null) {
+      let stars = starCountDiv.querySelectorAll("i");
+      for(let i = 0; i < this.starCount; i++) {
+        stars[i].classList.replace("fa-regular", "fa-solid");
+      }
+    }
+  }
+
+  protected readonly NgForm = NgForm;
 }
