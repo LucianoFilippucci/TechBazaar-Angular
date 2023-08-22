@@ -14,17 +14,16 @@ import {AccountingService} from "../accounting.service";
 export class CartModalComponent implements OnInit, DoCheck{
 
   public cartElements: CartElementModel[] = [];
+  public couponsList: string[] = [];
   public cartTotal: string = "";
   public tax: string = "";
-
+  public cartTotalAfterCoupon = "0";
   private user: LoginStateModel | undefined;
 
   updated: boolean = false;
   constructor(private cartService: UpdateCartService, private serverRequest: ServerRequestFacadeService, private toastService: ToastService, private accountingService: AccountingService) {
     if(this.accountingService.isAuthenticated()) {
-      let u = this.accountingService.getUser();
-      if(u != false)
-        this.user = u;
+      this.user = this.accountingService.getUser();
     }
   }
 
@@ -51,7 +50,17 @@ export class CartModalComponent implements OnInit, DoCheck{
         }
         this.cartTotal = result["message"]["cartTotal"];
         this.tax = result["message"]["taxTotal"];
+        this.cartTotalAfterCoupon = result["message"]["cartTotalAfterCoupon"];
       });
+
+      // @ts-ignore
+      this.serverRequest.getCartCoupons(this.user.cartId, this.user.token, (status: boolean, response: any) => {
+        if(status) {
+          this.couponsList = response as [];
+        } else {
+          this.toastService.show({ message: "Error fetching Coupons List.", isError: true });
+        }
+      })
     }
 
   }
@@ -112,6 +121,38 @@ export class CartModalComponent implements OnInit, DoCheck{
       });
     } else {
       this.toastService.show({ message: `Error while removing element`, isError: true})
+    }
+  }
+
+  changeQty(index: number, qty: number) {
+    if(this.accountingService.isAuthenticated() && this.user != null) {
+      this.serverRequest.editCartElement(this.cartElements[index].productId, qty, this.user.cartId, (status: boolean, response: any) => {
+        if(status) {
+          this.triggerUpdate();
+          this.toastService.show({ message: "Element updated.", isError: false });
+        } else {
+          this.toastService.show({ message: "Element not updated.", isError: true });
+        }
+      }, this.user.token)
+    }
+  }
+
+  applyCoupon() {
+    let couponText = document.getElementById("coupon") as HTMLInputElement;
+    if(couponText != null){
+      let couponCode = couponText.value;
+      if(this.accountingService.isAuthenticated() && this.user != null) {
+        this.serverRequest.applyPromotion(couponCode, this.user.cartId, this.user.token, (status: boolean, response: any) => {
+
+          if(status) {
+            this.toastService.show({ message: "Coupon Applied.", isError: false });
+            this.triggerUpdate();
+          } else {
+            console.log(response.error.message)
+            this.toastService.show({ message: response.error.message, isError: true });
+          }
+        });
+      }
     }
   }
 }

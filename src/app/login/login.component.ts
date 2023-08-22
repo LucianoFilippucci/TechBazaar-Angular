@@ -24,9 +24,14 @@ export class LoginComponent implements OnInit {
     this.accountingService.performLogin(loginForm.value["username"], loginForm.value["password"], this.loginCallback.bind(this));
   }
 
-  private loginCallback(status: boolean){
+  private loginCallback(status: boolean, response: any){
+    console.log(response);
     if(status) {
-      this.router.navigate([""]);
+      if(response["roles"][0] === "ROLE_STORE")
+        this.router.navigate(["store/administration"]);
+      else {
+        this.router.navigate(["/"]);
+      }
     }
   }
 

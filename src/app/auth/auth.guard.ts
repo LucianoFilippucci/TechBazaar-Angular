@@ -11,8 +11,14 @@ export function authenticationGuard(redirectRoute: string): CanActivateFn {
 
     let isLogged: boolean = accountingService.isAuthenticated();
 
-
-    return isLogged || router.createUrlTree([redirectRoute]);
+    let user = accountingService.getUser();
+    if(isLogged) {
+      if(user.roles[0] === "ROLE_STORE")
+        return true;
+      return router.navigate([""]);
+    } else {
+      return router.navigate([redirectRoute]);
+    }
 
   }
 }

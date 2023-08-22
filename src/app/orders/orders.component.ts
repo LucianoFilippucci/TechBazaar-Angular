@@ -19,9 +19,7 @@ export class OrdersComponent implements OnInit{
   private user: LoginStateModel;
   constructor(private serverRequestFacade: ServerRequestFacadeService, private accountingService: AccountingService) {
     if(this.accountingService.isAuthenticated()) {
-      let u = this.accountingService.getUser();
-      if(u != false)
-        this.user = u;
+      this.user = this.accountingService.getUser();
     }
   }
 

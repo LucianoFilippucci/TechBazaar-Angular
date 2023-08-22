@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Product} from "../models/product.model";
+import {ProductModel} from "../models/product.model";
 import {ActivatedRoute} from "@angular/router";
 import {ServerRequestFacadeService} from "../server-request-facade.service";
 import {ToastService} from "../toast.service";
@@ -18,7 +18,7 @@ import {NgForm} from "@angular/forms";
 export class ProductComponent implements OnInit {
 
   productId: number;
-  product: Product | undefined;
+  product: ProductModel | undefined;
   productReviews: ProductReviewModel[] | undefined;
   userHasReview: boolean = false;
   // @ts-ignore
@@ -34,9 +34,7 @@ export class ProductComponent implements OnInit {
     this.productId = activatedRouter.snapshot.params["id"];
     this.serverRequestFacade.getProduct(this.productId, this.showProduct.bind(this));
     if(this.accountingService.isAuthenticated()){
-      let u = this.accountingService.getUser();
-      if(u != false)
-        this.user = u;
+      this.user = this.accountingService.getUser()
     }
   }
 
@@ -105,15 +103,13 @@ export class ProductComponent implements OnInit {
 
 
   public showProduct(status: boolean, result: any) {
-    this.product = result["message"] as Product;
+    this.product = result["message"] as ProductModel;
   }
 
   addToCart() {
     if(this.accountingService.isAuthenticated()) {
       // @ts-ignore
-      let user = this.accountingService.getUser();
-      if(user != false)
-        this.serverRequestFacade.addElementToCart(this.productId, 1, user.cartId, this.showToast.bind(this), user.token);
+      this.serverRequestFacade.addElementToCart(this.productId, 1, this.user.cartId, this.showToast.bind(this), this.user.token);
     } else {
       this.toastService.show({message: "User Not Logged.", isError: true});
     }

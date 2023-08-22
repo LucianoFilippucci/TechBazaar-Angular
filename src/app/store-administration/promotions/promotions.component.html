@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="header">
+    <input id="search-box" type="text" class="text-box" placeholder="Search">
+    <button class="btn btn-small-but-medium btn-success" (click)="newPromotion()">New Product</button>
+  </div>
+  <div class="products" *ngIf="promotionList.length > 0">
+    <div class="head">
+      <p class="div1">Code</p>
+      <p class="div2">Discount</p>
+      <p class="div3">Category</p>
+      <p class="div4">Max Uses</p>
+      <p class="div5">Times Used</p>
+      <p class="div6">Expiration</p>
+      <p class="div7">Actions</p>
+    </div>
+    <div class="item" *ngFor="let elem of promotionList">
+      <span id="{{elem.couponCode}}"></span>
+      <p class="div1">{{elem.couponCode}}</p>
+      <p class="div2">{{elem.discount}}</p>
+      <p class="div3">{{elem.category}}</p>
+      <p class="div4">${{elem.maxUses}}</p>
+      <p class="div5">{{elem.usedTimes}}</p>
+      <p class="div6">{{elem.expiration | date:'dd-MMMM'}}</p>
+      <div class="actions div7">
+        <button class="btn btn-small btn-success btn-nobg" (click)="disablePromotion(elem.couponCode)"><i class="fa-solid fa-trash"></i></button>
+        <button class="btn btn-small btn-success btn-nobg"><i class="fa-solid fa-pen-to-square" (click)="editPromotion(elem.couponCode)"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_" class="modalGeneric" (click)="close($event)">
+  <div class="modal_content" id="modal_Content">
+
+
+    <div class="modal_header">
+      <span class="close" id="modal_Close" (click) = "close($event)">&times;</span>
+      <h2 id="modalTitle"></h2>
+    </div>
+
+
+    <div id="modalBody" class="modal_body">
+      <form action='' method='POST' role='form' #reviewForm='ngForm' (ngSubmit)='submitForm(reviewForm)' style='width: 100%'>
+        <div class='form-group'>
+          <div class='input-group'><input type='text' class='form-control-text' id='promotionName' placeholder='Promotion Code' ngModel name='promotionName' style='width: 100%;'></div>
+          <div class="input-group"><input type="text" class="form-control-text" id="promotionCategory" placeholder="Category" ngModel name="promotionCategory"></div>
+          <div class='input-group'>
+            <span class="cart-product-qty">
+            <span class="down" (click)="changeQty(-1)"><</span>
+            <input type="text" value="{{newPromoMaxUses}}" id="qty">
+            <span class="up" (click)="changeQty(1)">></span>
+          </span>
+          </div>
+          <div class="input-group"><input type="number" class="form-control-text" id="promoDiscount" placeholder="0" ngModel name="promoDiscount"></div>
+          <div class="input-group"><input type="date" id="promoExpiration" ngModel name="promoExpiration"></div>
+        </div>
+        <button class='btn btn-medium btn-no-border btn-success' style="margin-top: 10px">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+

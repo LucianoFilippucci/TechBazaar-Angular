@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {RestManagerService} from "./rest-manager.service";
 import {HttpClient} from "@angular/common/http";
 import {
-  ADD_ELEM_TO_CART, CHECKOUT, CLEAR_CART, EDIT_REVIEW, FETCH_USER_REVIEW, GET_ALL_PRODUCT_PAGED_REVIEWS,
+  ADD_ELEM_TO_CART, CHECKOUT, CLEAR_CART, DELETE_PRODUCT, EDIT_REVIEW, FETCH_USER_REVIEW, GET_ALL_PRODUCT_PAGED_REVIEWS,
   GET_CART,
-  GET_SINGLE_PRODUCT,
+  GET_SINGLE_PRODUCT, GET_STORE_PRODUCTS,
   GET_USER_ORDER_LIST, LIKE_REVIEW,
-  LOGIN, NEW_REVIEW, REMOVE_CART_ELEMENT,
-  SERVER_ADDRESS
+  LOGIN, NEW_PRODUCT, NEW_REVIEW, EDIT_CART_ELEMENT,
+  SERVER_ADDRESS, GET_STORE_ORDER, GET_STORE_PROMOTIONS, NEW_PROMOTION, APPLY_PROMOTION, GET_CART_COUPONS
 } from "./Helpers/variables";
+import {max} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,21 @@ export class ServerRequestFacadeService {
       false,
       token
       );
+  }
+
+  editCartElement(productId: number, qty: number, cartId: string, callback:any, token: string) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      EDIT_CART_ELEMENT,
+      {
+        productId: productId,
+        qty: qty,
+        cartId: cartId
+      },
+      callback,
+      false,
+      token
+    )
   }
 
   login(username: string, password: string, callback: any) {
@@ -99,7 +115,7 @@ export class ServerRequestFacadeService {
   removeCartElement(cartId: string, productId: number, callback: any, token: string) {
     this.restManager.makeAuthorizedPostJsonRequest(
       SERVER_ADDRESS,
-      REMOVE_CART_ELEMENT,
+      EDIT_CART_ELEMENT,
       {
         cartId: cartId,
         productId: productId,
@@ -177,6 +193,120 @@ export class ServerRequestFacadeService {
       callback,
       false,
       token
+    )
+  }
+
+  getStoreProducts(storeId: number, callback: any) {
+    this.restManager.makeGetRequest(
+      SERVER_ADDRESS,
+      GET_STORE_PRODUCTS,
+      {
+        storeId: storeId
+      },
+      callback
+    )
+  }
+
+  newProduct(name: string, desc: string, category: string, price: number, qty: number, storeId: number, token:string, callback: any) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      NEW_PRODUCT,
+      {
+        name: name,
+        description: desc,
+        category: category,
+        price: price,
+        qty: qty,
+        storeId: storeId
+      },
+      callback,
+      false,
+      token
+    )
+  }
+
+  deleteProduct(productId: number, storeId: number, token: string, callback: any) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      DELETE_PRODUCT,
+      {
+        productId: productId,
+        storeId: storeId
+      },
+      callback,
+      false,
+      token
+    )
+  }
+
+  getStoreOrders(storeId: number, token: string, callback: any) {
+    this.restManager.makeAuthorizedGetRequest(
+      SERVER_ADDRESS,
+      GET_STORE_ORDER,
+      {
+        storeId: storeId
+      },
+      token,
+      false,
+      callback
+    )
+  }
+
+  getStorePromotions(storeId: number, token: string, callback: any) {
+    this.restManager.makeAuthorizedGetRequest(
+      SERVER_ADDRESS,
+      GET_STORE_PROMOTIONS,
+      {
+        storeId: storeId
+      },
+      token,
+      false,
+      callback
+    )
+  }
+
+  newPromotion(promotionCode: string, promotionDiscount: number, storeId: number, category: string, maxUses: number, callback: any, token: string, expirationDate: Date) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      NEW_PROMOTION,
+      {
+        code: promotionCode,
+        discount: promotionDiscount,
+        storeId: storeId,
+        category: category,
+        expirationDate: expirationDate,
+        maxUses: maxUses
+      },
+      callback,
+      false,
+      token
+    )
+  }
+
+  applyPromotion(promotionCode: string, cartId: string, token: string, callback: any) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      APPLY_PROMOTION,
+      {
+        code: promotionCode,
+        cartId: cartId
+      },
+      callback,
+      false,
+      token
+    )
+  }
+
+  getCartCoupons(cartId: string, token: string, callback: any) {
+    this.restManager.makeAuthorizedGetRequest(
+      SERVER_ADDRESS,
+      GET_CART_COUPONS,
+      {
+        cartId: cartId
+      },
+      token,
+      false,
+      callback
     )
   }
 

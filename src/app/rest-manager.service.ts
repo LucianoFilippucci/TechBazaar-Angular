@@ -12,14 +12,14 @@ export class RestManagerService {
 
   private makeRequest(serverAddress: string, servicePath: string, method: string, body: any, callback: any) {
     this.http.request(method, serverAddress + servicePath, body)
-      .subscribe({
-        next: (response: any) => {
-          callback(true, response)
+      .subscribe(
+        (response: any) => {
+          callback(true, response);
         },
-        error: (response: any) => {
-          callback(false, response);
+        (errorResponse: any) => {
+          callback(false, errorResponse);
         }
-      });
+      );
   }
 
   private makeAuthorizedJsonRequest(serverAddress: string, servicePath: string, method: string, body: any, callback: any, isBody: boolean, token?: any) {
@@ -42,6 +42,7 @@ export class RestManagerService {
           callback(true, response)
         },
         error: (response: any) => {
+          console.log('Http Error: ', response);
           callback(false, response);
         }
       });

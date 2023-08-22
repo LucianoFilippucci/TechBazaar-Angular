@@ -11,13 +11,12 @@ import { LoginStateModel } from '../models/login-state.model';
 })
 export class ProfileComponent {
 
-  user: LoginStateModel | undefined;
+  // @ts-ignore
+  user: LoginStateModel;
 
   constructor(private accountingService: AccountingService, private cdr: ChangeDetectorRef) {
     if(this.accountingService.isAuthenticated()) {
-      let u = this.accountingService.getUser();
-      if(u != false)
-        this.user = u;
+      this.user = this.accountingService.getUser();
     }
   }
 

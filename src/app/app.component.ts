@@ -61,8 +61,10 @@ export class AppComponent implements OnDestroy, OnInit{
     if(x != null) {
       x.innerHTML = message["message"];
       x.className += "show";
-      if(message["isError"])
-        x.className += "toast-error"
+      if(message["isError"] == true)
+        x.className += " toast-error"
+      else
+        x.className += " toast-success"
       setTimeout(function() { // @ts-ignore
         x.className = x.className.replace("show", "");
         if(message["isError"]) {

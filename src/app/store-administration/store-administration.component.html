@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="side-nav">
+    <div class="user">
+      <img class = "user-thumbnail" ngSrc="assets/logo.png" alt="USER" height="500" width="500">
+      <p class="text-large text-clear">AdminCP</p>
+    </div>
+
+    <ul>
+      <li><a id="home" (click)="setInternalComponent('HOME', $event)" class="side-link"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a id="products" (click)="setInternalComponent('PRODUCTS', $event)" class="side-link"><i class="fa-solid fa-bag-shopping"></i> Products</a></li>
+      <li><a id="orders" (click)="setInternalComponent('ORDERS', $event)" class="side-link"><i class="fa-solid fa-receipt"></i> Orders</a></li>
+      <li><a id="promotions" (click)="setInternalComponent('PROMOTIONS', $event)" class="side-link"><i class="fa-solid fa-tag fa-rotate-90"></i> Promotions</a></li>
+      <li><a id="analytics" (click)="setInternalComponent('ANALYTICS', $event)" class="side-link"><i class="fa-solid fa-chart-simple"></i> Analytics</a></li>
+      <li><a id="logout" (click)="logout()" class="side-link"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+    </ul>
+  </div>
+  <div class="content">
+
+    <app-products *ngIf="showComponent == 'PRODUCTS' "></app-products>
+    <app-store-orders *ngIf="showComponent == 'ORDERS' "></app-store-orders>
+    <app-promotions *ngIf="showComponent == 'PROMOTIONS'"></app-promotions>
+  </div>
+</div>

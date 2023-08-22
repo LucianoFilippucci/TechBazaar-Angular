@@ -61,9 +61,9 @@ body {
 }
 
 .btn-nobg {
-  background-color:transparent;
-  border: none;
-  outline: none;
+  background-color:transparent!important;
+  border: none!important;
+  outline: none!important;
 }
 
 .btn-no-border {
@@ -92,7 +92,6 @@ body {
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
-  background-color: var(--success-green);
   color: var(--background-color);
   text-align: center;
   border: 2px;
@@ -112,6 +111,10 @@ body {
 
 .toast-error {
   background: var(--error-red);
+}
+
+.toast-success {
+  background-color: var(--success-green);
 }
 
 @-webkit-keyframes fadein {
@@ -151,9 +154,22 @@ body {
   font-weight: 600;
 }
 
+.text-large {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.text-black {
+  color: var(--text-color-dark);
+}
+
 .text-light {
   padding: 5px;
   color: var(--ligher);
+}
+
+.text-clear {
+  color: var(--text-color-accent);
 }
 
 .spinner {
