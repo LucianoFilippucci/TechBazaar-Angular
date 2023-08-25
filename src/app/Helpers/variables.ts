@@ -15,7 +15,7 @@ export const LOGIN = "/user/auth/login";
 
 export const GET_CART = "/user/cart";
 export const CLEAR_CART = "/user/cart/clear";
-export const CHECKOUT = "/user/place-order";
+export const CHECKOUT = "/user/cart/place-order";
 export const USER_EDIT_EMAIL = "/user/edit/email";
 export const EDIT_CART_ELEMENT = "/user/cart/update-element";
 

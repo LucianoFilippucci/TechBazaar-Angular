@@ -94,9 +94,10 @@ export class CartModalComponent implements OnInit, DoCheck{
 
   checkOut() {
     // @ts-ignore
-    this.serverRequest.checkOut(this.user.cartId, 4, this.user.token, (status: boolean, result: any) => {
+    this.serverRequest.checkOut(this.user.cartId, 1, this.user.token, (status: boolean, result: any) => {
       if(status) {
         this.cartElements = [];
+        this.couponsList = [];
         this.toastService.show({
           message: "Order correctly Placed.",
           isError: false
