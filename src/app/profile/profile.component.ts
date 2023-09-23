@@ -1,8 +1,8 @@
-import {Component, ChangeDetectorRef, OnDestroy} from '@angular/core';
+import {Component, ChangeDetectorRef, OnDestroy, OnInit} from '@angular/core';
 import {AccountingService} from "../accounting.service";
 import {USER_EDIT_EMAIL} from "../Helpers/variables";
-import {Subscription} from "rxjs";
 import { LoginStateModel } from '../models/login-state.model';
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-profile',
@@ -13,10 +13,12 @@ export class ProfileComponent {
 
   // @ts-ignore
   user: LoginStateModel;
+  thumbnailPath : string = "";
 
   constructor(private accountingService: AccountingService, private cdr: ChangeDetectorRef) {
     if(this.accountingService.isAuthenticated()) {
       this.user = this.accountingService.getUser();
+      this.thumbnailPath = this.user.thumbnailPath;
     }
   }
 

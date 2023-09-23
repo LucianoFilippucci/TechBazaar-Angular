@@ -6,7 +6,7 @@
 <div class="profile">
     <div class="sidebar">
         <div class="user-img">
-            <img ngSrc="assets/thumbnail.jpg" alt="user thumbnail" class="user-thumbnail" height="4080" width="3072">
+          <img ngSrc="{{user['thumbnailPath']}}" alt="user thumbnail" class="user-thumbnail" width="75" height="75">
             <p class="username" *ngIf="user">{{user["username"]}}</p>
             <p class="email" *ngIf="user">{{user["email"]}}</p>
         </div>

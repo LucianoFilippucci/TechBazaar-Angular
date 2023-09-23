@@ -5,7 +5,8 @@ export class LoginStateModel {
     public username: string,
     public email: string,
     public roles: string[],
-    public cartId: string
+    public cartId: string,
+    public thumbnailPath: string
   ) {
   }
 }
