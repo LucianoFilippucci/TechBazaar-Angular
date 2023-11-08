@@ -51,6 +51,7 @@ export class CartModalComponent implements OnInit, DoCheck{
         this.cartTotal = result["message"]["cartTotal"];
         this.tax = result["message"]["taxTotal"];
         this.cartTotalAfterCoupon = result["message"]["cartTotalAfterCoupon"];
+        localStorage.setItem("cartElems", result["message"]["cartElements"])
       });
 
       // @ts-ignore
@@ -86,6 +87,7 @@ export class CartModalComponent implements OnInit, DoCheck{
       if(status) {
         this.cartElements = [];
         this.toastService.show({message: "Cart Cleared", isError: false});
+        this.cartService.update("CLEAR")
       } else {
         this.toastService.show({message: "Error While deleting cart.", isError: true});
       }
@@ -117,6 +119,7 @@ export class CartModalComponent implements OnInit, DoCheck{
         if(elem.productId == result) {
           this.cartElements = this.cartElements.splice(this.cartElements.indexOf(elem), this.cartElements.indexOf(elem));
           this.toastService.show({ message: `${elem.name} removed.`, isError: false});
+          this.cartService.update(-1)
           this.triggerUpdate();
         }
       });

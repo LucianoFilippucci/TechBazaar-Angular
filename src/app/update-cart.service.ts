@@ -7,16 +7,21 @@ import {Subject} from "rxjs";
 export class UpdateCartService {
   private cartItemNumSubj = new Subject<number>();
   updateValue$ = this.cartItemNumSubj.asObservable();
+
   constructor() { }
 
-  update(newVal: number) {
-    let vv = localStorage.getItem("cartItemNum");
+  update(newVal: any) {
+    let vv = localStorage.getItem("cartElems");
     if(vv != null) {
-      let val = parseInt(vv);
+      let val = Number(vv);
       if(val != null) {
-        val = newVal < 0 ? val - newVal : val + newVal;
-        val = val < 0 ? 0 : val;
-        localStorage.setItem("cartItemNum", val.toString());
+        if(newVal == "CLEAR")
+          val = 0
+        else {
+          val = Number(newVal) < 0 ? val - Number(newVal) : val + Number(newVal);
+          val = val < 0 ? 0 : val;
+        }
+        localStorage.setItem("cartElems", val.toString());
         this.cartItemNumSubj.next(val);
       }
     }
@@ -24,6 +29,6 @@ export class UpdateCartService {
 
   getVal() {
     // @ts-ignore
-    return parseInt(localStorage.getItem("cartItemNum"));
+    return parseInt(localStorage.getItem("cartElems"));
   }
 }

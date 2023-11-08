@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginForm:NgForm) {
-    this.accountingService.performLogin(loginForm.value["username"], loginForm.value["password"], this.loginCallback.bind(this));
+    this.accountingService.performLogin(loginForm.value["username"], loginForm.value["password"]);
   }
 
   private loginCallback(status: boolean, response: any){
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       if(response["roles"][0] === "ROLE_STORE")
         this.router.navigate(["store/administration"]);
       else {
-        this.router.navigate(["/"]);
+        window.location.href = ""
       }
     }
   }

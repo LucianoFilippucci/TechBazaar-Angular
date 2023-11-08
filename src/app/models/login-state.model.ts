@@ -6,7 +6,9 @@ export class LoginStateModel {
     public email: string,
     public roles: string[],
     public cartId: string,
-    public thumbnailPath: string
+    public thumbnailPath: string,
+    public totalUnreadNotifications: number
+
   ) {
   }
 }

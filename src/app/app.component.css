@@ -16,13 +16,14 @@ header {
   display: flex;
 }
 
-#searchbox {
+#searchBox {
   width: 400px;
   height: 40px;
   border-radius: 0 10px 10px 0;
   border: none;
   outline: none;
-  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 #category {
@@ -31,6 +32,7 @@ header {
   border: none;
   outline: none;
   text-align-last: center;
+
 }
 
 .header_nav {
@@ -51,9 +53,8 @@ header {
   border: none;
   outline: none;
   background-color: inherit;
-  margin: 0;
   font-size: 1.3rem;
-  margin-right: 10px;
+  margin: 0 10px 0 0;
 }
 
 .dropdown .dropdown_btn:hover {
@@ -142,6 +143,3 @@ ul {
   font-weight: 700;
   font-size: 16px;
 }
-
-
-

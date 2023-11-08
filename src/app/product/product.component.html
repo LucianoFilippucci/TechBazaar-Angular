@@ -39,7 +39,7 @@
 
     <div class="buttons">
       <button class="btn btn-success btn-medium" (click)="addToCart()">ADD CART</button>
-      <button class="btn btn-small btn-no-border btn-nobg"><i class="fa-solid fa-bookmark"></i></button>
+      <button class="btn btn-small btn-no-border btn-nobg" (click)="toWishlist()"><mat-icon>{{inUserWishlist ? 'favorite' : 'favorite_border'}}</mat-icon></button>
       <button class="btn btn-small btn-no-border btn-nobg"><i class="fa-solid fa-share-nodes"></i></button>
     </div>
 

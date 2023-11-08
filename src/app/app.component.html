@@ -1,6 +1,6 @@
 <header *ngIf="showNav">
   <div class="header_inner">
-    <div class="logo">LOGO</div>
+    <div class="logo"><a routerLink="">LOGO</a></div>
     <div class="header_searchbox">
       <div class="categorySelect">
         <select name="category" id="category">
@@ -25,15 +25,16 @@
 
               <div *ngIf="isLogged" class="dropdown_content">
                 <a routerLink="/user/profile">Profile</a>
-                <a href="">Saved</a>
+                <a routerLink="/user/wishlist">Wishlist</a>
                 <a (click)="logout()">Logout</a>
               </div>
             </div>
           </li>
-          <li><a routerLink="user/orders">Resi e Ordini</a></li>
+          <li><button class="cart_btn" id="messageBtn" matBadge="{{unreadMessages}}" matBadgePosition="above after" matBadgeColor="accent"><mat-icon>message</mat-icon></button></li>
+          <li style="margin-left: 10px"><a routerLink="user/orders">Resi e Ordini</a></li>
           <div class="cart">
-            <button class="cart_btn" id="cartBtn" (click) = "openCartModal()"><i class="fa-solid fa-cart-shopping fa-xl"></i></button>
-            <span class="cart_count"><span class="text-small">{{cartItemNum}}</span></span>
+            <button class="cart_btn" id="cartBtn" (click) = "openCartModal()" matBadge="{{currCartElems}}" matBadgePosition="above" matBadgeColor="accent"><i class="fa-solid fa-cart-shopping fa-xl"></i></button>
+
           </div>
         </ul>
       </nav>

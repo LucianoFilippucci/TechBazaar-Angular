@@ -3,6 +3,8 @@ import {AccountingService} from "../accounting.service";
 import {USER_EDIT_EMAIL} from "../Helpers/variables";
 import { LoginStateModel } from '../models/login-state.model';
 import {NgOptimizedImage} from "@angular/common";
+import {ServerRequestFacadeService} from "../server-request-facade.service";
+import {ToastService} from "../toast.service";
 
 @Component({
   selector: 'app-profile',
@@ -15,10 +17,16 @@ export class ProfileComponent {
   user: LoginStateModel;
   thumbnailPath : string = "";
 
-  constructor(private accountingService: AccountingService, private cdr: ChangeDetectorRef) {
+  countries : any
+  cities: any
+
+  showComponent = "INFO"
+
+  constructor(private accountingService: AccountingService, private cdr: ChangeDetectorRef, private requestFacade : ServerRequestFacadeService, private toastService : ToastService) {
     if(this.accountingService.isAuthenticated()) {
       this.user = this.accountingService.getUser();
       this.thumbnailPath = this.user.thumbnailPath;
+
     }
   }
 

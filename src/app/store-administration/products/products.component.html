@@ -3,51 +3,57 @@
     <input id="search-box" type="text" class="text-box" placeholder="Search">
     <button class="btn btn-small-but-medium btn-success" (click)="newProduct()">New Product</button>
   </div>
-  <div class="products" *ngIf="storeProducts.length > 0">
-    <div class="head">
-      <p class="div1">Image</p>
-      <p class="div2">Name</p>
-      <p class="div3">Quantity</p>
-      <p class="div4">Price</p>
-      <p class="div5">Qty Sold</p>
-      <p class="div6">Actions</p>
-    </div>
-    <div class="item" *ngFor="let elem of storeProducts">
-      <span id="{{elem.id}}"></span>
-      <img src="" alt="" class="div1">
-      <p class="div2">{{elem.name}}</p>
-      <p class="div3">{{elem.qty}}</p>
-      <p class="div4">${{elem.price}}</p>
-      <p class="div5">{{elem.totalSelt}}</p>
-      <div class="actions div6">
-        <button class="btn btn-small btn-success btn-nobg" (click)="deleteProduct(elem.id)"><i class="fa-solid fa-trash"></i></button>
-        <button class="btn btn-small btn-success btn-nobg"><i class="fa-solid fa-pen-to-square" (click)="editProduct(elem.id)"></i></button>
-      </div>
-    </div>
-  </div>
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let element">{{element.category}}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let element">{{element.description}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let element">{{element.price}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalSold">
+      <th mat-header-cell *matHeaderCellDef>Total Sold</th>
+      <td mat-cell *matCellDef="let element">{{element.totalSold}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn btn-small btn-no-border btn-nobg" (click)="editProduct(element.id)"><mat-icon>edit</mat-icon></button>
+        <button class="btn btn-small btn-no-border btn-nobg" (click)="deleteProduct(element.id)"><mat-icon>remove</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef = "let row; columns: displayedColumns"></tr>
+  </table>
+
+
 </div>
 
-<div id="modal_" class="modalGeneric" (click)="close($event)">
-  <div class="modal_content" id="modal_Content">
-
-
-    <div class="modal_header">
-      <span class="close" id="modal_Close" (click) = "close($event)">&times;</span>
-      <h2 id="modalTitle"></h2>
-    </div>
-
-
-    <div id="modalBody" class="modal_body">
-      <form action='' method='POST' role='form' #reviewForm='ngForm' (ngSubmit)='submitForm(reviewForm)' style='width: 100%'>
-        <div class='form-group'>
-          <div class='input-group'><input type='text' class='form-control-text' id='productName' placeholder='Product Name' ngModel name='productName' style='width: 100%;'></div>
-          <div class="input-group"><input type="text" class="form-control-text" id="productCategory" placeholder="Category" ngModel name="productCategory"></div>
-          <div class='input-group'><textarea name="productDescription" placeholder="Description" id="productDescription" ngModel cols="60" rows="15" class="review-text-area"></textarea></div>
-          <div class="input-group"><input type="number" class="form-control-text" id="productPrice" placeholder="0" ngModel name="productPrice"></div>
-          <div class="input-group"><input type="number" class="form-control-text" id="productQuantity" placeholder="0" ngModel name="productQuantity"></div>
-        </div>
-        <button class='btn btn-medium btn-no-border btn-success' style="margin-top: 10px">Submit</button>
-      </form>
-    </div>
-  </div>
-</div>
+<app-generic-modal [isForm] = "true"></app-generic-modal>

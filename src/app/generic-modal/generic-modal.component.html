@@ -1,0 +1,15 @@
+<div id="modal_" class="modalGeneric" (click)="close($event)">
+  <div class="modal_content" id="modal_Content">
+
+
+    <div class="modal_header">
+      <span class="close" id="modal_Close" (click) = "close($event)">&times;</span>
+      <h2 id="modalTitle"></h2>
+    </div>
+
+
+    <div id="modalBody" class="modal_body">
+      <app-form-manager *ngIf="isForm"></app-form-manager>
+    </div>
+  </div>
+</div>

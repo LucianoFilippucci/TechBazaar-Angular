@@ -14,7 +14,7 @@ export class StoreOrdersComponent {
 
   storeOrders: StoreOrderModel[] = [];
   user;
-
+  myDataArray : any
 
   constructor(private accountingService: AccountingService, private serverRequest: ServerRequestFacadeService, private toastService: ToastService) {
     this.user = this.accountingService.isAuthenticated() ? this.accountingService.getUser() : null;

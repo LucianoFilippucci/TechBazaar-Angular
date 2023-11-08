@@ -2,12 +2,30 @@ import { Injectable } from '@angular/core';
 import {RestManagerService} from "./rest-manager.service";
 import {HttpClient} from "@angular/common/http";
 import {
-  ADD_ELEM_TO_CART, CHECKOUT, CLEAR_CART, DELETE_PRODUCT, EDIT_REVIEW, FETCH_USER_REVIEW, GET_ALL_PRODUCT_PAGED_REVIEWS,
+  ADD_ELEM_TO_CART,
+  CHECKOUT,
+  CLEAR_CART,
+  DELETE_PRODUCT,
+  EDIT_REVIEW,
+  FETCH_USER_REVIEW,
+  GET_ALL_PRODUCT_PAGED_REVIEWS,
   GET_CART,
-  GET_SINGLE_PRODUCT, GET_STORE_PRODUCTS,
-  GET_USER_ORDER_LIST, LIKE_REVIEW,
-  LOGIN, NEW_PRODUCT, NEW_REVIEW, EDIT_CART_ELEMENT,
-  SERVER_ADDRESS, GET_STORE_ORDER, GET_STORE_PROMOTIONS, NEW_PROMOTION, APPLY_PROMOTION, GET_CART_COUPONS
+  GET_SINGLE_PRODUCT,
+  GET_STORE_PRODUCTS,
+  GET_USER_ORDER_LIST,
+  LIKE_REVIEW,
+  LOGIN,
+  NEW_PRODUCT,
+  NEW_REVIEW,
+  EDIT_CART_ELEMENT,
+  SERVER_ADDRESS,
+  GET_STORE_ORDER,
+  GET_STORE_PROMOTIONS,
+  NEW_PROMOTION,
+  APPLY_PROMOTION,
+  GET_CART_COUPONS,
+  EDIT_PRODUCT,
+  USER_EDIT_PWD, CHECK_IS_IN_WISHLIST, ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, GET_WISHLIST
 } from "./Helpers/variables";
 import {max} from "rxjs";
 
@@ -20,6 +38,73 @@ export class ServerRequestFacadeService {
     this.restManager = new RestManagerService(http);
   }
 
+
+  editPassword(userId: number, newPassword : string, token: string,  callback: any) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      USER_EDIT_PWD,
+      {
+        newPassword: newPassword,
+        userId: userId
+      },
+      callback,
+      false,
+      token
+    );
+  }
+
+  checkProductWishlist(userId: number, productId: number, callback: any) {
+    this.restManager.makeGetRequest(
+      SERVER_ADDRESS,
+      CHECK_IS_IN_WISHLIST,
+      {
+        userId: userId,
+        productId: productId
+      },
+      callback
+    );
+  }
+
+  addToWishlist(userId: number, productId: number, token: string, callback: any) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      ADD_TO_WISHLIST,
+      {
+        userId: userId,
+        productId: productId
+      },
+      callback,
+      false,
+      token
+    );
+  }
+
+  removeFromWishlist(userId: number, productId: number, token: string, callback: any) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      REMOVE_FROM_WISHLIST,
+      {
+        userId: userId,
+        productId: productId
+      },
+      callback,
+      false,
+      token
+    );
+  }
+
+  getWishlist(userId: number, token: string, callback: any) {
+    this.restManager.makeAuthorizedGetRequest(
+      SERVER_ADDRESS,
+      GET_WISHLIST,
+      {
+        userId: userId
+      },
+      token,
+      false,
+      callback
+    )
+  }
 
   getOrderList(userId: number, token: string ,callback: any) {
     this.restManager.makeAuthorizedGetRequest(SERVER_ADDRESS, GET_USER_ORDER_LIST, {userId: userId}, token, false,callback)
@@ -237,6 +322,33 @@ export class ServerRequestFacadeService {
       false,
       token
     )
+  }
+
+  editProduct(productId : number, storeId: number, token : string, productName :string, productCategory: string, productDescription :string, productPrice: number, productQuantity: number, callback :any ) {
+    this.restManager.makeAuthorizedPostJsonRequest(
+      SERVER_ADDRESS,
+      EDIT_PRODUCT,
+      {
+        productId: productId,
+        storeId: storeId,
+        price: productPrice,
+        name: productName,
+        description: productPrice,
+        category: productCategory,
+        qty: productQuantity
+      },
+      callback,
+      false,
+      token
+    )
+  }
+
+  getCountries(callback : any) {
+    this.restManager.makeGetRequest("https://restcountries.com/v3.1/all", "", "", callback)
+  }
+
+  getCities(country: string, callback: any) {
+    this.restManager.makeAuthorizedPostJsonRequest("https://countriesnow.space/api/v0.1/countries/cities","", {country:country}, callback, true)
   }
 
   getStoreOrders(storeId: number, token: string, callback: any) {

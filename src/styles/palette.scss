@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: rgba(white, 0.7);
+
+$techbazaar-purple-palette: (
+
+  50: #e8eaf6,
+  100: #ad79ec,
+  200: #9f63e9,
+  300: #914ce6,
+  400: #8436e2,
+  500: #7620df,
+  600: #6a1dc9,
+  700: #5e19b3,
+  800: #53169c,
+  900: #4A148C,
+  A100: #8c47e1,
+  A200: #8637e6,
+  A400: #6914d2,
+  A700: #580db5,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+

@@ -8,6 +8,9 @@ export const GET_SINGLE_PRODUCT = "/product/single-item";
 export const GET_STORE_PRODUCTS = "/product/store-products";
 export const NEW_PRODUCT = "/product/new";
 export const DELETE_PRODUCT = "/product/delete"
+export const EDIT_PRODUCT = "/product/edit"
+export const CHECK_IS_IN_WISHLIST = "/user/wishlist/check-product"
+
 
 export const ADD_ELEM_TO_CART = "/user/cart/add";
 
@@ -18,6 +21,10 @@ export const CLEAR_CART = "/user/cart/clear";
 export const CHECKOUT = "/user/cart/place-order";
 export const USER_EDIT_EMAIL = "/user/edit/email";
 export const EDIT_CART_ELEMENT = "/user/cart/update-element";
+export const USER_EDIT_PWD = "/user/edit/password";
+export const ADD_TO_WISHLIST = "/user/wishlist/add"
+export const GET_WISHLIST = "/user/wishlist/get"
+export const REMOVE_FROM_WISHLIST = "/user/wishlist/remove"
 
 export const GET_STORE_ORDER = "/order/store";
 export const GET_STORE_PROMOTIONS = "/coupon/store";

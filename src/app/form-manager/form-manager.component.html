@@ -1,0 +1,11 @@
+<div>
+  <form (ngSubmit)="submit()" [formGroup]="form">
+    <div *ngFor="let control of formInfos; let i = index">
+      {{control.value}}
+      <input [type]="control['type']" [formControlName]="control['name']" [placeholder]="control['placeholder']" [value]="control.value">
+      <hr>
+      <br>
+    </div>
+    <button type='submit' class='btn btn-medium btn-no-border btn-success' style='margin-top: 10px'>Submit</button>
+  </form>
+</div>

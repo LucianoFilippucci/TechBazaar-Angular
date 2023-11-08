@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {ProductModel} from "../../models/product.model";
 import {AccountingService} from "../../accounting.service";
 import {ServerRequestFacadeService} from "../../server-request-facade.service";
 import {ToastService} from "../../toast.service";
 import {CouponModel} from "../../models/coupon-model";
+import {BuildFormService} from "../../build-form.service";
 
 @Component({
   selector: 'app-promotions',
@@ -17,7 +18,23 @@ export class PromotionsComponent {
   user;
   newPromoMaxUses: number = 0;
 
-  constructor(private accountingService: AccountingService, private serverRequest: ServerRequestFacadeService, private toastService: ToastService) {
+  //modalElements : any []
+
+  constructor(private accountingService: AccountingService, private serverRequest: ServerRequestFacadeService, private toastService: ToastService, private buildFormService : BuildFormService) {
+
+    // this.modalElements = []
+    // this.modalElements.push("New Promotion")
+    // this.modalElements.push(this.submitForm.bind(this))
+    // this.modalElements.push("<div class='input-group'><input type='text' class='form-control-text' id='promotionName' placeholder='Promotion Code' ngModel name='promotionName' style='width: 100%;'></div>" )
+    // this.modalElements.push("<div class='input-group'><input type='text' class='form-control-text' id='promotionCategory' placeholder='Category' ngModel name='promotionCategory'></div>")
+    // this.modalElements.push("<div class='input-group'> <span class='cart-product-qty'> <span class='down' (click)='changeQty(-1)'><</span> <input type='text' value='{{newPromoMaxUses}}' id='qty'> <span class='up' (click)='changeQty(1)'>></span> </span> </div>\n")
+    // this.modalElements.push("<div class='input-group'><input type='number' class='form-control-text' id='promoDiscount' placeholder='0' ngModel name='promoDiscount'></div>\n")
+    // this.modalElements.push("<div class='input-group'><input type='date' id='promoExpiration' ngModel name='promoExpiration'></div>\n")
+
+
+
+
+
     if(this.accountingService.isAuthenticated()) {
       this.user = this.accountingService.getUser();
       if( this.user != undefined) {
@@ -38,6 +55,7 @@ export class PromotionsComponent {
   }
 
   submitForm(form: NgForm) {
+    console.log(form)
     if(this.accountingService.isAuthenticated()) {
       if(this.user != undefined) {
         let cartModal = document.getElementById("modal_");
@@ -57,6 +75,31 @@ export class PromotionsComponent {
     }
   }
 
+  submit(result : any) {
+    if(this.accountingService.isAuthenticated()) {
+      if(this.user != undefined) {
+        this.serverRequest.newPromotion(
+          result["promotionName"],
+          result["promotionDiscount"],
+          this.user.id,
+          result["promotionCategory"],
+          result["promotionMaxUses"],
+          (status: boolean, response: any) => {
+            if(status){
+              console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+              console.log(response)
+              console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+              //this.promotionList.push(new CouponModel())
+              this.toastService.show({ message: "Promotion Created", isError : false});
+            } else
+              this.toastService.show({ message: "Error saving new promo.", isError: true});
+          },
+          this.user.token,
+          result["promotionExpiration"]
+        )
+      }
+    }
+  }
   disablePromotion(couponCode: string) {
 
   }
@@ -65,29 +108,19 @@ export class PromotionsComponent {
 
   }
 
-  // @ts-ignore
-  close(event) {
-    let cartModal = document.getElementById("modal_")
-    let cart = document.getElementById("modal_Content");
-    let cartCloseButton = document.getElementById("modal_Close");
-
-    if(cartModal != null && cart != null && cartCloseButton != null) {
-      if(!cart.contains(event.target) || event.target == cartCloseButton) {
-        cartModal.style.display = "none";
-      }
-    }
-
-  }
-
   newPromotion() {
     if(this.accountingService.isAuthenticated()) {
       let modal = document.getElementById("modal_");
       if (modal != null)
         modal.style.display = "block";
-      let modalTitle = document.getElementById("modalTitle");
-      if(modalTitle != null) {
-        modalTitle.innerText = "New Product";
-      }
+
+
+      this.buildFormService.newInputControl("promotionName", "text", "Promotion Code");
+      this.buildFormService.newInputControl("promotionCategory", "text", "Promotion Category");
+      this.buildFormService.newInputControl("promotionMaxUses", "number", "Promotion Max Uses (-1 => unlimited)");
+      this.buildFormService.newInputControl("promotionDiscount", "number", "Promotion Discount (%)");
+      this.buildFormService.newInputControl("promotionExpiration", "date", "Expiration Date");
+      this.buildFormService.setCallbackFunction(this.submit.bind(this))
     }
   }
 

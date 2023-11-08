@@ -13,6 +13,11 @@
     gap: 110px;
 }
 
+.content {
+  width: 100%;
+
+}
+
 .user-thumbnail {
     border-radius: 50%;
     height: 75px;
@@ -24,6 +29,8 @@
 .sidebar {
     display: flex;
     flex-direction: column;
+    border-right: 1px solid rgba(136, 136, 136, 0.25);
+    padding-right: 10px;
 }
 
 .username, .email {
@@ -36,6 +43,11 @@
     flex-direction: column;
     list-style-type: none;
     padding: 0;
+    gap: 10px;
+}
+
+.side-link-active, side-link:hover {
+  font-weight: bolder;
 }
 
 .side-link {
@@ -51,12 +63,12 @@
     background-color: var(--bg-color-v2);
 }
 
-.content {
-    margin-top: 15px;
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-}
+/*.content {*/
+/*    margin-top: 15px;*/
+/*    display: flex;*/
+/*    gap: 25px;*/
+/*    flex-wrap: wrap;*/
+/*}*/
 
 .card {
     width: 250px;

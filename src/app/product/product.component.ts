@@ -25,6 +25,7 @@ export class ProductComponent implements OnInit {
   user: LoginStateModel;
   userReview: number = -1;
   starCount: number = 0;
+  inUserWishlist: boolean = false
   constructor(
     private activatedRouter: ActivatedRoute,
     private serverRequestFacade: ServerRequestFacadeService,
@@ -34,7 +35,14 @@ export class ProductComponent implements OnInit {
     this.productId = activatedRouter.snapshot.params["id"];
     this.serverRequestFacade.getProduct(this.productId, this.showProduct.bind(this));
     if(this.accountingService.isAuthenticated()){
-      this.user = this.accountingService.getUser()
+      this.user = this.accountingService.getUser();
+      this.serverRequestFacade.checkProductWishlist(this.user.id, this.productId, (status: boolean, response: any) => {
+        console.log(response)
+        if(status)
+          this.inUserWishlist = response
+        else
+          this.toastService.show({message: "Error.", isError: true});
+      });
     }
   }
 
@@ -56,6 +64,26 @@ export class ProductComponent implements OnInit {
       }
     });
 
+  }
+
+
+  toWishlist(){
+    if(this.accountingService.isAuthenticated()) {
+      if(this.inUserWishlist){
+        this.serverRequestFacade.removeFromWishlist(this.user.id, this.productId, this.user.token, (status: boolean, response: any) => {
+          if(status)
+            this.inUserWishlist = response;
+          else this.toastService.show({message: "Error fetching Product Reviews", isError: true});
+        });
+      } else {
+        this.serverRequestFacade.addToWishlist(this.user.id, this.productId, this.user.token, (status: boolean, response: any) => {
+          if(status)
+            this.inUserWishlist = response;
+          else
+            this.toastService.show({message: "Error.", isError: true});
+        });
+      }
+    }
   }
 
   newReview() {
@@ -86,6 +114,7 @@ export class ProductComponent implements OnInit {
   }
 
   submitForm(form:NgForm) {
+    console.log(form)
     if(this.accountingService.isAuthenticated()) {
       this.serverRequestFacade.submitReview(this.user.id, form.value["title"], form.value["body"], (status: boolean, result: any) => {
         if (status) {

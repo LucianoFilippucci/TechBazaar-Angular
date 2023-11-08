@@ -35,6 +35,17 @@ body {
   flex-direction: column;
 }
 
+.container-small {
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+button{
+  cursor: pointer;
+}
+
 .btn {
   padding: 15px;
   font-size: 1.2rem;
@@ -145,6 +156,7 @@ body {
   opacity: 0.25;
 }
 
+
 .line-smaller {
   width: 80%;
 }
@@ -185,3 +197,9 @@ body {
   0% { transform: rotate(0deg) }
   100% { transform: rotate(360deg) }
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

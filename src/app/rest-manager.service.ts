@@ -11,6 +11,7 @@ export class RestManagerService {
   }
 
   private makeRequest(serverAddress: string, servicePath: string, method: string, body: any, callback: any) {
+    console.log(body)
     this.http.request(method, serverAddress + servicePath, body)
       .subscribe(
         (response: any) => {
@@ -42,11 +43,11 @@ export class RestManagerService {
           callback(true, response)
         },
         error: (response: any) => {
-          console.log('Http Error: ', response);
           callback(false, response);
         }
       });
   }
+
 
   public makeGetRequest(serverAddress: string, servicePath: string, body: any, callback: any) {
     let requestPath = servicePath + "?";

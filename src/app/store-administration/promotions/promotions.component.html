@@ -29,34 +29,4 @@
   </div>
 </div>
 
-<div id="modal_" class="modalGeneric" (click)="close($event)">
-  <div class="modal_content" id="modal_Content">
-
-
-    <div class="modal_header">
-      <span class="close" id="modal_Close" (click) = "close($event)">&times;</span>
-      <h2 id="modalTitle"></h2>
-    </div>
-
-
-    <div id="modalBody" class="modal_body">
-      <form action='' method='POST' role='form' #reviewForm='ngForm' (ngSubmit)='submitForm(reviewForm)' style='width: 100%'>
-        <div class='form-group'>
-          <div class='input-group'><input type='text' class='form-control-text' id='promotionName' placeholder='Promotion Code' ngModel name='promotionName' style='width: 100%;'></div>
-          <div class="input-group"><input type="text" class="form-control-text" id="promotionCategory" placeholder="Category" ngModel name="promotionCategory"></div>
-          <div class='input-group'>
-            <span class="cart-product-qty">
-            <span class="down" (click)="changeQty(-1)"><</span>
-            <input type="text" value="{{newPromoMaxUses}}" id="qty">
-            <span class="up" (click)="changeQty(1)">></span>
-          </span>
-          </div>
-          <div class="input-group"><input type="number" class="form-control-text" id="promoDiscount" placeholder="0" ngModel name="promoDiscount"></div>
-          <div class="input-group"><input type="date" id="promoExpiration" ngModel name="promoExpiration"></div>
-        </div>
-        <button class='btn btn-medium btn-no-border btn-success' style="margin-top: 10px">Submit</button>
-      </form>
-    </div>
-  </div>
-</div>
-
+<app-generic-modal [isForm] = "true"></app-generic-modal>

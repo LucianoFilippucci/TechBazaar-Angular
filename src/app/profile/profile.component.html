@@ -7,61 +7,22 @@
     <div class="sidebar">
         <div class="user-img">
           <img ngSrc="{{user['thumbnailPath']}}" alt="user thumbnail" class="user-thumbnail" width="75" height="75">
-            <p class="username" *ngIf="user">{{user["username"]}}</p>
             <p class="email" *ngIf="user">{{user["email"]}}</p>
         </div>
         <div class="side-nav">
             <ul>
-                <li><a href="#" class="side-link">Personal Info</a></li>
-                <li><a href="#" class="side-link">Billing & Payments</a></li>
-                <li><a href="#" class="side-link">Access</a></li>
+                <li><button class="side-link side-link-active btn-nobg" (click)="showComponent = 'INFO'">Personal Info</button></li>
+                <li><button class="side-link btn-nobg" (click)="showComponent = 'WISHLIST'">Billing & Payments</button></li>
+                <li><button class="side-link btn-nobg">Wishlist</button></li>
+                <li><button class="side-link btn-nobg">Reviews</button></li>
+                <li><button class="side-link btn-nobg">Auctions</button></li>
             </ul>
         </div>
     </div>
-
     <div class="content">
-        <div class="card">
-            <div class="card-header" ><p class="text-medium">Name</p> <i class="fa-regular fa-pen-to-square"></i></div>
-            <div class="line"></div>
-            <div class="card-body"><p class="text-light" *ngIf="user">{{user["username"]}}</p></div>
-        </div>
-
-        <div class="card">
-            <div class="card-header"><p class="text-medium">Birth Date</p> <i class="fa-regular fa-pen-to-square"></i></div>
-            <div class="line"></div>
-            <div class="card-body"><p class="text-light">29/12/2000</p></div>
-        </div>
-
-        <div class="card">
-            <div class="card-header"><p class="text-medium">Country</p> <i class="fa-regular fa-pen-to-square"></i></div>
-            <div class="line"></div>
-            <div class="card-body"><p class="text-light">Italy</p></div>
-        </div>
-
-        <div class="card">
-            <div class="card-header"><p class="text-medium">Language</p> <i class="fa-regular fa-pen-to-square"></i></div>
-            <div class="line"></div>
-            <div class="card-body">
-                <p class="text-light">English</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header"><p class="text-medium">Addresses</p> <i class="fa-regular fa-pen-to-square"></i></div>
-            <div class="line"></div>
-            <div class="card-body">
-                <p class="text-light">English</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header"><p class="text-medium">Access Data</p> <i class="fa-regular fa-pen-to-square" (click)="editInfo('access')"></i></div>
-            <div class="line"></div>
-            <div class="card-body"><p class="text-light" *ngIf="user">email: {{user["email"]}}</p></div>
-        </div>
-
-
+      <app-info *ngIf="showComponent == 'INFO'"></app-info>
     </div>
 </div>
+<app-generic-modal [isForm] = "true"></app-generic-modal>
 
 
